@@ -5,3 +5,7 @@
 body {
   @apply bg-bg-color-grey;
 }
+
+button {
+  @apply disabled:cursor-not-allowed;
+}

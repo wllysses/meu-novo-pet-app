@@ -1,31 +1,37 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PiEyeLight, PiEyeSlashLight } from "react-icons/pi";
+import { api } from "@/services/api";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ErrorMessage } from "@/components/ErrorMessage";
-import { api } from "@/services/api";
 
 export default function Cadastro() {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const registerValidationSchema = z
     .object({
-      nome: z.string().min(1, "Preenchimento obrigatório."),
+      nome: z.string().trim().min(1, "Nome é obrigatório"),
       email: z
         .string()
-        .min(1, "Preenchimento obrigatório.")
+        .trim()
+        .min(1, "E-mail é obrigatório")
         .email("Formato de e-mail inválido"),
-      telefone: z.string().min(1, "Preenchimento obrigatório."),
-      cidade: z.string().min(1, "Preenchimento obrigatório."),
+      telefone: z.string().trim().min(1, "Telefone é obrigatório"),
+      cidade: z.string().trim().min(1, "Cidade/Estado é obrigatório."),
       senha: z
         .string()
-        .min(1, "Preenchimento obrigatório.")
+        .trim()
+        .min(1, "Senha é obrigatória")
         .min(5, "Mínimo 5 caracteres."),
       confirmar_senha: z
         .string()
-        .min(1, "Preenchimento obrigatório.")
+        .trim()
+        .min(1, "Confirmar senha obrigatória")
         .min(5, "Mínimo 5 caracteres."),
     })
     .refine((data) => data.senha === data.confirmar_senha, {
@@ -47,14 +53,13 @@ export default function Cadastro() {
   async function handleRegisterUser(data: RegisterValidationSchema) {
     const fetchData = await api.postUser(data);
 
-    if(fetchData.statusCode === 500) {
+    if (fetchData.statusCode === 500) {
       console.log(fetchData.message);
       return;
     }
 
     console.log(fetchData.message);
     reset();
-
   }
 
   return (
@@ -73,7 +78,7 @@ export default function Cadastro() {
             <label className="text-primary-color">Nome</label>
             <input
               type="text"
-              className="p-4 outline-primary-color"
+              className="p-4 outline-none"
               placeholder="ex: José da Silva"
               {...register("nome")}
             />
@@ -83,7 +88,7 @@ export default function Cadastro() {
             <label className="text-primary-color">E-mail</label>
             <input
               type="email"
-              className="p-4 outline-primary-color"
+              className="p-4 outline-none"
               placeholder="ex: seuemail@email.com"
               {...register("email")}
             />
@@ -93,7 +98,7 @@ export default function Cadastro() {
             <label className="text-primary-color">Telefone</label>
             <input
               type="tel"
-              className="p-4 outline-primary-color"
+              className="p-4 outline-none"
               placeholder="ex: 83988776655"
               {...register("telefone")}
             />
@@ -114,12 +119,20 @@ export default function Cadastro() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-primary-color">Senha</label>
-            <input
-              type="password"
-              className="p-4 outline-primary-color"
-              placeholder="ex: Minhasenha@123"
-              {...register("senha")}
-            />
+            <div className="p-4 flex items-center w-full bg-white rounded">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full outline-none"
+                placeholder="ex: Minhasenha@123"
+                {...register("senha")}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <PiEyeLight /> : <PiEyeSlashLight />}
+              </button>
+            </div>
             {errors.senha && <ErrorMessage message={errors.senha.message} />}
             <span className="text-xs text-primary-color font-semibold">
               Pelo menos 5 caracteres, uma letra maiúscula e um caractere
@@ -128,12 +141,20 @@ export default function Cadastro() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-primary-color">Confirmar senha</label>
-            <input
-              type="password"
-              className="p-4 outline-primary-color"
-              placeholder="ex: Minhasenha@123"
-              {...register("confirmar_senha")}
-            />
+            <div className="p-4 flex items-center w-full bg-white rounded">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full outline-none"
+                placeholder="ex: Minhasenha@123"
+                {...register("confirmar_senha")}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <PiEyeLight /> : <PiEyeSlashLight />}
+              </button>
+            </div>
             {errors.confirmar_senha && (
               <ErrorMessage message={errors.confirmar_senha.message} />
             )}
