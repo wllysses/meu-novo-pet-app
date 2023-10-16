@@ -10,8 +10,12 @@ import { api } from "@/services/api";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -38,10 +42,12 @@ export default function Login() {
     try {
       setIsLoading(true);
       const fetchData = await api.authUser(data);
-      console.log(fetchData);
-      toast.success(`Bem-vindo(a), ${fetchData.data.nome}`);
+      toast.success(`Bem-vindo(a), ${fetchData.data.nome}!`);
+      localStorage.setItem('token', fetchData.token);
+      localStorage.setItem('user', JSON.stringify(fetchData.data));
+      router.push("/dashboard/meus-pets");
     } catch (err) {
-      console.log(err);
+      toast.error('E-mail ou senha incorretos.');
     } finally {
       setIsLoading(false);
     }
