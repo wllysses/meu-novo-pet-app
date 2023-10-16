@@ -8,3 +8,10 @@ export interface IPet {
   sexo: string;
   imagem: string;
 }
+
+export interface PetCardProps {
+  id: number
+  nome: string
+  disponivel: boolean
+  imagem: string
+}

@@ -1,4 +1,4 @@
-import { IPet } from "@/models/Pet";
+import { IPet, PetCardProps } from "@/models/Pet";
 import { IUser } from "@/models/User";
 
 const BASE_URL = "https://api-meunovopet.onrender.com";
@@ -62,9 +62,23 @@ async function postPet({ usuario_id, nome, raca, tipo, idade, porte, sexo, image
   return await response.json();
 }
 
+async function getAllPets(): Promise<PetCardProps[]> {
+  const response = await fetch(`${BASE_URL}/api/v1/pets`, { cache: 'no-store' });
+  const data = await response.json();
+  return await data.data;
+}
+
+async function getPetById(id: number) {
+  const response = await fetch(`${BASE_URL}/api/v1/pets/${id}`, { cache: 'no-store' });
+  const data = await response.json();
+  return await data;
+}
+
 export const api = {
   postUser,
   authUser,
   uploadImage,
-  postPet
+  postPet,
+  getAllPets,
+  getPetById
 };
