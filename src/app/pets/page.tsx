@@ -1,11 +1,13 @@
+import { api } from "@/services/api";
+import { PetCardProps } from "@/models/Pet";
 import { Card } from "@/components/Card";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { api } from "@/services/api";
+import { Spinner } from "@/components/Spinner";
 
 export default async function Pets() {
 
-    const pets = await api.getAllPets();
+    const pets: PetCardProps[] = await api.getAllPets();
 
     return (
         <>

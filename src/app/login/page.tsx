@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,7 +11,8 @@ import { api } from "@/services/api";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { useRouter } from "next/navigation";
+
+import { setCookie } from "nookies";
 
 export default function Login() {
 
@@ -43,8 +45,9 @@ export default function Login() {
       setIsLoading(true);
       const fetchData = await api.authUser(data);
       toast.success(`Bem-vindo(a), ${fetchData.data.nome}!`);
-      localStorage.setItem('token', fetchData.token);
-      localStorage.setItem('user', JSON.stringify(fetchData.data));
+      setCookie(null, 'token', fetchData.token);
+      setCookie(null, 'nome', fetchData.data.nome);
+      setCookie(null, 'id', fetchData.data.id);
       router.push("/dashboard/meus-pets");
     } catch (err) {
       toast.error('E-mail ou senha incorretos.');

@@ -9,13 +9,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/services/api";
 import { Aside } from "@/components/Aside";
 import { ErrorMessage } from "@/components/ErrorMessage";
+import { parseCookies } from "nookies";
 
 export default function MeusPets() {
 
   const router = useRouter();
+  const { token, id } = parseCookies();
 
   const [imageUrl, setImageUrl] = useState('');
-  const [user] = useState(JSON.parse(localStorage.getItem('user')!));
 
   const registerPetValidationSchema = z.object({
     nome: z.string().trim().min(1, 'Nome é obrigatório'),
@@ -38,7 +39,7 @@ export default function MeusPets() {
   }
 
   async function registerPet(data: RegisterPetValidationSchema) {
-    const fetchData = await api.postPet({usuario_id: user.id, nome: data.nome, raca: data.raca, tipo: data.tipo, idade: data.idade, porte: data.porte, sexo: data.sexo, imagem: imageUrl});
+    const fetchData = await api.postPet({usuario_id: parseInt(id), nome: data.nome, raca: data.raca, tipo: data.tipo, idade: data.idade, porte: data.porte, sexo: data.sexo, imagem: imageUrl});
 
     if(fetchData.success) {
       toast.success(fetchData.message);
@@ -50,11 +51,11 @@ export default function MeusPets() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if(!token) {
+    if (!token) {
       router.push("/login");
+      return;
     }
-  }, [user]);
+  }, [token, id]);
   
   return (
     <div className="min-h-screen flex max-md:flex-col">

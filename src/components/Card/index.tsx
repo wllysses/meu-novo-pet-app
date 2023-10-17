@@ -3,7 +3,6 @@ import { PetCardProps } from "@/models/Pet";
 
 interface CardProps {
   data: PetCardProps
-  internal?: boolean
 }
 
 export function Card(props: CardProps) {

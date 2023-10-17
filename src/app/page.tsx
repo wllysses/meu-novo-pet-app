@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import dogAndCat from "@/assets/images/hero-image.png";
 import { AccordionItem } from "@/components/AccordionItem";
 import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -21,9 +22,11 @@ export default function Home() {
               Descubra a alegria da adoção de animais e mude duas vidas para
               sempre.
             </p>
-            <button className="bg-primary-color w-40 h-10 text-white rounded hover:bg-[#6e29bcd2]">
-              Quero adotar
-            </button>
+            <Link href="/pets">
+              <button className="bg-primary-color w-40 h-10 text-white rounded hover:bg-[#6e29bcd2]">
+                Quero adotar
+              </button>
+            </Link>
           </div>
           <Image src={dogAndCat} alt="Cat&Dog Image" width={550} />
         </section>

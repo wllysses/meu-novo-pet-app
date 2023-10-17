@@ -1,5 +1,6 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Spinner } from "@/components/Spinner";
 import { api } from "@/services/api";
 import { IoLogoWhatsapp, IoCall } from "react-icons/io5";
 
@@ -12,6 +13,8 @@ interface ParamsProps {
 export default async function Pet({ params: { id } }: ParamsProps) {
   
   const pet = await api.getPetById(parseInt(id));
+
+  if(!pet) return <Spinner />;
 
   return (
     <>
@@ -32,7 +35,7 @@ export default async function Pet({ params: { id } }: ParamsProps) {
             <img
               src={pet.imagem}
               alt={`Foto do pet: ${pet.nome}`}
-              className="object-cover max-w-[500px] w-full rounded max-lg:max-w-full"
+              className="object-cover shadow-md max-w-[500px] w-full rounded max-lg:max-w-full"
               loading="lazy"
             />
           </section>

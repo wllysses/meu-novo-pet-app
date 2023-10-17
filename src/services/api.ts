@@ -1,4 +1,4 @@
-import { IPet, PetCardProps } from "@/models/Pet";
+import { IPet } from "@/models/Pet";
 import { IUser } from "@/models/User";
 
 const BASE_URL = "https://api-meunovopet.onrender.com";
@@ -61,10 +61,10 @@ async function postPet({ usuario_id, nome, raca, tipo, idade, porte, sexo, image
   return await response.json();
 }
 
-async function getAllPets(): Promise<PetCardProps[]> {
+async function getAllPets() {
   const response = await fetch(`${BASE_URL}/api/v1/pets`, { cache: 'no-store' });
   const data = await response.json();
-  return await data.data;
+  return await data;
 }
 
 async function getPetById(id: number) {
@@ -73,11 +73,40 @@ async function getPetById(id: number) {
   return await data;
 }
 
+async function getPetsByUserId(userId: number) {
+  const response = await fetch(`${BASE_URL}/api/v1/usuario/pets/${userId}`, { cache: 'no-store' });
+  const data = await response.json();
+  return await data;
+}
+
+async function putPetStatus(id: number, status: boolean) {
+  const response = await fetch(`${BASE_URL}/api/v1/disponivel/pets/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      disponivel: status
+    }),
+  });
+  return await response.json();
+}
+
+async function deletePet(id: number) {
+  const response = await fetch(`${BASE_URL}/api/v1/pets/${id}`, {
+    method: "DELETE",
+  });
+  return await response.json();
+}
+
 export const api = {
   postUser,
   authUser,
   uploadImage,
   postPet,
   getAllPets,
-  getPetById
+  getPetById,
+  getPetsByUserId,
+  putPetStatus,
+  deletePet
 };

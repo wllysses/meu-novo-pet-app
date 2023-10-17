@@ -6,3 +6,8 @@ export interface IUser {
   senha: string;
   confirmar_senha: string;
 }
+
+export interface UserData {
+  id: number
+  nome: string
+}
