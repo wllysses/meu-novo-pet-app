@@ -12,7 +12,7 @@ export function Header() {
 
   return (
     <header className="bg-primary-color p-4 w-full">
-      <div className="container mx-auto flex items-center justify-between max-[770px]:flex-col max-[770px]:gap-4">
+      <div className="container mx-auto flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-1 relative">
             <Image src={logo} alt="Meu Novo Pet Logo" width={80} />
