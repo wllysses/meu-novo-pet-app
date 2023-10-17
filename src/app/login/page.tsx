@@ -15,7 +15,6 @@ import { Header } from "@/components/Header";
 import { setCookie } from "nookies";
 
 export default function Login() {
-
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
@@ -45,12 +44,12 @@ export default function Login() {
       setIsLoading(true);
       const fetchData = await api.authUser(data);
       toast.success(`Bem-vindo(a), ${fetchData.data.nome}!`);
-      setCookie(null, 'token', fetchData.token);
-      setCookie(null, 'nome', fetchData.data.nome);
-      setCookie(null, 'id', fetchData.data.id);
+      setCookie(null, "token", fetchData.token);
+      setCookie(null, "nome", fetchData.data.nome);
+      setCookie(null, "id", fetchData.data.id);
       router.push("/dashboard/meus-pets");
     } catch (err) {
-      toast.error('E-mail ou senha incorretos.');
+      toast.error("E-mail ou senha incorretos.");
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +58,7 @@ export default function Login() {
   return (
     <>
       <Header />
-      <main className="max-w-[500px] mx-auto mt-20 px-6 min-h-[72vh]">
+      <main className="max-w-[500px] mx-auto mt-20 px-6 min-h-[75vh]">
         <div className="text-primary-color mb-6">
           <h3 className="font-bold text-2xl">Acessar conta</h3>
           <p className="text-lg">Faça login com a sua conta</p>
@@ -87,7 +86,10 @@ export default function Login() {
                 placeholder="Nome"
                 {...register("senha")}
               />
-              <button type="button" onClick={() => setShowPassword(!showPassword)}>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? <PiEyeLight /> : <PiEyeSlashLight />}
               </button>
             </div>

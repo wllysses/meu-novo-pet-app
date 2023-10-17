@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import logo from "@/assets/images/logo.png";
+import { Menu } from "../Menu";
 
 export function Header() {
 
@@ -12,16 +13,18 @@ export function Header() {
   return (
     <header className="bg-primary-color p-4 w-full">
       <div className="container mx-auto flex items-center justify-between max-[770px]:flex-col max-[770px]:gap-4">
-        <div className="flex items-center gap-1 relative">
-          <Image src={logo} alt="Meu Novo Pet Logo" width={80} />
-          <div className="flex flex-col mt-4">
-            <h3 className="text-white font-bold text-xs absolute top-5">
-              MEU NOVO
-            </h3>
-            <h1 className="text-secondary-color font-bold text-[38px]">PET</h1>
+        <Link href="/">
+          <div className="flex items-center gap-1 relative">
+            <Image src={logo} alt="Meu Novo Pet Logo" width={80} />
+            <div className="flex flex-col mt-4">
+              <h3 className="text-white font-bold text-xs absolute top-5">
+                MEU NOVO
+              </h3>
+              <h1 className="text-secondary-color font-bold text-[38px]">PET</h1>
+            </div>
           </div>
-        </div>
-        <nav className="text-white font-semibold">
+        </Link>
+        {/* <nav className="text-white font-semibold">
           <ul className="flex items-center gap-8 cursor-pointer">
             <li className="hover:text-secondary-color">
               <Link href="/">Início</Link>
@@ -50,7 +53,9 @@ export function Header() {
           >
             Entrar
           </button>
-        </div>
+        </div> */}
+
+        <Menu />
       </div>
     </header>
   );
