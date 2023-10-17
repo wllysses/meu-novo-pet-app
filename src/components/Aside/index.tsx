@@ -7,7 +7,6 @@ import {
 } from "react-icons/md";
 import logo from "@/assets/images/logo.png";
 
-
 export function Aside() {
   return (
     <aside className="max-w-xs w-full bg-primary-color px-4 py-8 max-md:max-w-full">

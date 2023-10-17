@@ -2,7 +2,6 @@ import { IPet, PetCardProps } from "@/models/Pet";
 import { IUser } from "@/models/User";
 
 const BASE_URL = "https://api-meunovopet.onrender.com";
-const CLIENT_ID = "b9e7c38f77e6d0e";
 
 async function postUser(userData: IUser) {
   const response = await fetch(`${BASE_URL}/api/v1/usuarios`, {

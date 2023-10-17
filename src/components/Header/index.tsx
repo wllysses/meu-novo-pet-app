@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/images/logo.png";
 import { useRouter } from "next/navigation";
+import logo from "@/assets/images/logo.png";
 
 export function Header() {
 
