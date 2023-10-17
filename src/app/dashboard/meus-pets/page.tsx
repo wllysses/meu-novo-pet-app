@@ -24,14 +24,7 @@ export default function MeusPets() {
           MEUS PETS
         </h2>
         <div className="w-full mt-6 grid grid-cols-5 gap-8 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2">
-          <Card disponivel={true} />
-          <Card disponivel={true} />
-          <Card disponivel={false} />
-          <Card disponivel={true} />
-          <Card disponivel={false} />
-          <Card disponivel={true} />
-          <Card disponivel={false} />
-          <Card disponivel={true} />
+          {/* <Card data={} internal={true}  /> */}
         </div>
       </main>
     </div>
