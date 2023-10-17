@@ -41,7 +41,7 @@ export function Modal({ petId, status }: ModalProps) {
       </button>
 
       {isOpen ? (
-        <div className="h-screen w-full bg-zinc-800 bg-opacity-50 fixed top-0 left-0 flex items-center justify-center">
+        <div className="h-screen w-full bg-zinc-800 bg-opacity-50 fixed top-0 left-0 flex items-center justify-center z-50">
           <div className="max-w-lg w-full bg-white rounded p-4">
             <header className="flex items-center justify-between text-primary-color font-bold border-b border-primary-color pb-2">
               <h2>ATUALIZAR STATUS DO PET</h2>

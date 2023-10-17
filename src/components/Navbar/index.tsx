@@ -6,7 +6,7 @@ import { useState } from "react";
 import { MdMenu } from "react-icons/md";
 import { destroyCookie, parseCookies } from "nookies";
 
-export function Menu() {
+export function Navbar() {
   const router = useRouter();
   const { token, nome } = parseCookies();
 
@@ -34,7 +34,7 @@ export function Menu() {
       />
     </button>
       {isOpen ? (
-        <div className="w-full absolute top-0 left-0 bg-primary-color shadow h-96 px-8 py-4 text-white">
+        <div className="w-full absolute top-0 left-0 bg-primary-color shadow h-96 px-8 py-4 text-white z-50">
           <header className="w-full flex items-center justify-between font-bold">
             <h3>Menu</h3>
             <button

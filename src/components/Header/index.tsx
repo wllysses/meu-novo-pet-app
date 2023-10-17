@@ -1,14 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import logo from "@/assets/images/logo.png";
-import { Menu } from "../Menu";
+import { Navbar } from "@/components/Navbar";
 
 export function Header() {
-
-  const router = useRouter();
 
   return (
     <header className="bg-primary-color p-4 w-full">
@@ -24,38 +19,7 @@ export function Header() {
             </div>
           </div>
         </Link>
-        {/* <nav className="text-white font-semibold">
-          <ul className="flex items-center gap-8 cursor-pointer">
-            <li className="hover:text-secondary-color">
-              <Link href="/">Início</Link>
-            </li>
-            <li className="hover:text-secondary-color">
-              <Link href="/pets">Pets</Link>
-            </li>
-            <li className="hover:text-secondary-color">
-              <Link href="/contato">Contato</Link>
-            </li>
-            <li className="hover:text-secondary-color">
-              <Link href="/sobre">Sobre</Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="flex items-center gap-4">
-          <button 
-            className="bg-secondary-color rounded px-4 py-2 font-bold text-primary-color hover:bg-[#f5c98c]"
-            onClick={() => router.push("/cadastro")}
-          >
-            Cadastre-se
-          </button>
-          <button 
-            className="bg-secondary-color rounded px-4 py-2 font-bold text-primary-color hover:bg-[#f5c98c]"
-            onClick={() => router.push("/login")}
-          >
-            Entrar
-          </button>
-        </div> */}
-
-        <Menu />
+        <Navbar />
       </div>
     </header>
   );

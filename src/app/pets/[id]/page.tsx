@@ -1,8 +1,8 @@
+import { IoLogoWhatsapp, IoCall } from "react-icons/io5";
+import { api } from "@/services/api";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Spinner } from "@/components/Spinner";
-import { api } from "@/services/api";
-import { IoLogoWhatsapp, IoCall } from "react-icons/io5";
 
 interface ParamsProps {
   params: {
@@ -66,10 +66,15 @@ export default async function Pet({ params: { id } }: ParamsProps) {
                 </button>
               <button 
                 className="w-full bg-secondary-color p-2 rounded text-white font-semibold flex items-center justify-center gap-2 hover:bg-[#f5c98c]"
-                disabled
               >
-                <IoCall size={20} />
-                Ligar
+                <a 
+                    href={`tel:+55${pet.usuario.telefone}`} 
+                    target="_blank"
+                    className="w-full flex items-center justify-center gap-2"
+                  >
+                    <IoCall size={20} />
+                    Ligar
+                  </a>
               </button>
             </div>
           </section>

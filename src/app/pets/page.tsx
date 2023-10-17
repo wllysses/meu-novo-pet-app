@@ -9,6 +9,8 @@ export default async function Pets() {
 
     const pets: PetCardProps[] = await api.getAllPets();
 
+    if(!pets) return <Spinner />;
+
     return (
         <>
             <Header />
