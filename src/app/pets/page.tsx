@@ -1,15 +1,16 @@
+"use client";
+
 import { api } from "@/services/api";
 import { PetCardProps } from "@/models/Pet";
 import { Card } from "@/components/Card";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Spinner } from "@/components/Spinner";
+import { useFetch } from "@/hooks/useFetch";
 
-export default async function Pets() {
-
-    const pets: PetCardProps[] = await api.getAllPets();
-
-    if(!pets) return <Spinner />;
+export default function Pets() {
+    
+    const { data: pets, isLoading, isError } = useFetch<PetCardProps[]>('https://api-meunovopet.onrender.com/api/v1/pets');
 
     return (
         <>
@@ -22,6 +23,8 @@ export default async function Pets() {
                 <section className="w-full mt-16">
                     <h3 className="text-center font-bold text-primary-color text-3xl">Nossos Pets</h3>
                     <div className="w-full mt-12 min-h-[60vh] grid grid-cols-5 gap-8 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2">
+                        { isLoading && <Spinner /> }
+                        { isError && <span>Algo de errado aconteceu 😢</span> }
                         {pets && pets.map((pet) => (
                             <Card key={pet.id} data={pet} />
                         ))}

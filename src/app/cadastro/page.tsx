@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PiEyeLight, PiEyeSlashLight } from "react-icons/pi";
+import { toast } from "react-toastify";
 import { api } from "@/services/api";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -12,6 +13,7 @@ import { ErrorMessage } from "@/components/ErrorMessage";
 
 export default function Cadastro() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   const registerValidationSchema = z
     .object({
@@ -50,16 +52,39 @@ export default function Cadastro() {
     resolver: zodResolver(registerValidationSchema),
   });
 
-  async function handleRegisterUser(data: RegisterValidationSchema) {
-    const fetchData = await api.postUser(data);
-
-    if (fetchData.statusCode === 500) {
-      console.log(fetchData.message);
-      return;
-    }
-
-    console.log(fetchData.message);
-    reset();
+  function handleRegisterUser(data: RegisterValidationSchema) {
+    // try {
+    //   setIsLoading(true);
+    //   const fetchData = await api.postUser(data);
+      
+    //   if(fetchData.statusCode === 500 || 400) {
+    //     throw new Error(fetchData.message);
+    //   }
+    //   toast.success(fetchData.message);
+    //   reset();
+    // } catch (err) {
+    //   console.log(err: Error);
+    //   toast.error(err.message);
+    // } finally {
+    //   setIsLoading(false);
+    // }
+    setIsLoading(true);
+    api
+      .postUser(data)
+      .then((resp) => {
+        if(resp.statusCode === 500) {
+          throw new Error('E-mail já cadastrado.');
+        }
+        toast.success(resp.message);
+        reset();
+      })
+      .catch((err: Error) => {
+        console.log(err);
+        toast.error(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -165,9 +190,10 @@ export default function Cadastro() {
           </div>
           <button
             type="submit"
-            className="bg-secondary-color p-4 text-white font-semibold hover:bg-[#f5c98c]"
+            className="bg-secondary-color p-4 text-white font-semibold hover:bg-[#f5c98c] disabled:bg-opacity-50"
+            disabled={isLoading!}
           >
-            Cadastrar
+            { isLoading ? 'Cadastrando usuário' : 'Cadastrar' }
           </button>
         </form>
       </main>

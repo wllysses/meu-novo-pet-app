@@ -49,6 +49,7 @@ export default function Login() {
       setCookie(null, "id", fetchData.data.id);
       router.push("/dashboard/meus-pets");
     } catch (err) {
+      console.log(err);
       toast.error("E-mail ou senha incorretos.");
     } finally {
       setIsLoading(false);
@@ -97,10 +98,10 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="bg-secondary-color p-4 text-white font-semibold hover:bg-[#f5c98c]"
+            className="bg-secondary-color p-4 text-white font-semibold hover:bg-[#f5c98c] disabled:bg-opacity-50"
             disabled={isLoading!}
           >
-            Entrar
+            { isLoading ? 'Carregando...' : 'Entrar' }
           </button>
         </form>
       </main>
