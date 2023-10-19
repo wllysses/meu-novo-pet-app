@@ -9,16 +9,15 @@ import { Aside } from "@/components/Aside";
 import { Spinner } from "@/components/Spinner";
 import { Modal } from "@/components/Modal";
 import { toast } from "react-toastify";
+import { useFetch } from "@/hooks/useFetch";
 
 export default function MeusPets() {
   const router = useRouter();
   const { token, id } = parseCookies();
 
-  const [pets, setPets] = useState<IPet[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
+  const { data: pets, isLoading, isError } = useFetch<IPet[]>(`https://api-meunovopet.onrender.com/api/v1/usuario/pets/${id}`);
 
   async function removePet(id: number) {
-    
     try {
       const fetchData = await api.deletePet(id);
       toast.success(fetchData.message);
@@ -37,13 +36,6 @@ export default function MeusPets() {
       router.push("/login");
       return;
     }
-
-    setIsLoading(true);
-    api
-      .getPetsByUserId(parseInt(id))
-      .then((resp) => setPets(resp))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
   }, [token, id]);
 
   return (
@@ -54,7 +46,8 @@ export default function MeusPets() {
           MEUS PETS
         </h2>
         { isLoading && <Spinner /> }
-        {!pets.length ? (
+        { isError && <span>Algo de errado aconteceu 😢</span> }
+        {!pets?.length ? (
           <span>Nenhum pet cadastrado.</span>
         ) : (
           <div className="w-full mt-6 grid grid-cols-5 gap-8 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2">

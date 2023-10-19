@@ -12,25 +12,31 @@ import { ErrorMessage } from "@/components/ErrorMessage";
 import { parseCookies } from "nookies";
 
 export default function MeusPets() {
-
   const router = useRouter();
   const { token, id } = parseCookies();
 
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
 
   const registerPetValidationSchema = z.object({
-    nome: z.string().trim().min(1, 'Nome é obrigatório'),
-    raca: z.string().trim().min(1, 'Raça é obrigatória'),
-    tipo: z.string().trim().min(1, 'Raça é obrigatória'),
-    idade: z.string().trim().min(1, 'Idade é obrigatória'),
-    porte: z.string().trim().min(1, 'Porte é obrigatório'),
-    sexo: z.string().trim().min(1, 'Sexo é obrigatório')
+    nome: z.string().trim().min(1, "Nome é obrigatório"),
+    raca: z.string().trim().min(1, "Raça é obrigatória"),
+    tipo: z.string().trim().min(1, "Raça é obrigatória"),
+    idade: z.string().trim().min(1, "Idade é obrigatória"),
+    porte: z.string().trim().min(1, "Porte é obrigatório"),
+    sexo: z.string().trim().min(1, "Sexo é obrigatório"),
   });
 
-  type RegisterPetValidationSchema = z.infer<typeof registerPetValidationSchema>;
+  type RegisterPetValidationSchema = z.infer<
+    typeof registerPetValidationSchema
+  >;
 
-  const { register, reset, handleSubmit, formState: { errors } } = useForm<RegisterPetValidationSchema>({
-    resolver: zodResolver(registerPetValidationSchema)
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterPetValidationSchema>({
+    resolver: zodResolver(registerPetValidationSchema),
   });
 
   async function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
@@ -39,9 +45,18 @@ export default function MeusPets() {
   }
 
   async function registerPet(data: RegisterPetValidationSchema) {
-    const fetchData = await api.postPet({usuario_id: parseInt(id), nome: data.nome, raca: data.raca, tipo: data.tipo, idade: data.idade, porte: data.porte, sexo: data.sexo, imagem: imageUrl});
+    const fetchData = await api.postPet({
+      usuario_id: parseInt(id),
+      nome: data.nome,
+      raca: data.raca,
+      tipo: data.tipo,
+      idade: data.idade,
+      porte: data.porte,
+      sexo: data.sexo,
+      imagem: imageUrl,
+    });
 
-    if(fetchData.success) {
+    if (fetchData.success) {
       toast.success(fetchData.message);
       reset();
       return;
@@ -56,7 +71,7 @@ export default function MeusPets() {
       return;
     }
   }, [token, id]);
-  
+
   return (
     <div className="min-h-screen flex max-md:flex-col">
       <Aside />
@@ -71,15 +86,15 @@ export default function MeusPets() {
               <input
                 type="text"
                 className="p-2 rounded border border-primary-color"
-                { ...register('nome') }
+                {...register("nome")}
               />
-              { errors.nome && <ErrorMessage message={errors.nome.message} /> }
+              {errors.nome && <ErrorMessage message={errors.nome.message} />}
             </div>
             <div id="tipo" className="flex flex-col gap-2">
               <label className="font-semibold text-primary-color">Tipo</label>
               <select
                 className="p-2 rounded border border-primary-color"
-                { ...register('tipo') }
+                {...register("tipo")}
               >
                 <option value="" selected disabled>
                   Selecionar
@@ -87,31 +102,31 @@ export default function MeusPets() {
                 <option value="gato">Gato</option>
                 <option value="cachorro">Cachorro</option>
               </select>
-              { errors.tipo && <ErrorMessage message={errors.tipo.message} /> }
+              {errors.tipo && <ErrorMessage message={errors.tipo.message} />}
             </div>
             <div id="raca" className="flex flex-col gap-2">
               <label className="font-semibold text-primary-color">Raça</label>
               <input
                 type="text"
                 className="p-2 rounded border border-primary-color"
-                { ...register('raca') }
+                {...register("raca")}
               />
-              { errors.raca && <ErrorMessage message={errors.raca.message} /> }
+              {errors.raca && <ErrorMessage message={errors.raca.message} />}
             </div>
             <div id="idade" className="flex flex-col gap-2">
               <label className="font-semibold text-primary-color">Idade</label>
               <input
                 type="text"
                 className="p-2 rounded border border-primary-color"
-                { ...register('idade') }
+                {...register("idade")}
               />
-              { errors.idade && <ErrorMessage message={errors.idade.message} /> }
+              {errors.idade && <ErrorMessage message={errors.idade.message} />}
             </div>
             <div id="porte" className="flex flex-col gap-2">
               <label className="font-semibold text-primary-color">Porte</label>
               <select
                 className="p-2 rounded border border-primary-color"
-                { ...register('porte') }
+                {...register("porte")}
               >
                 <option value="" selected disabled>
                   Selecionar
@@ -120,13 +135,13 @@ export default function MeusPets() {
                 <option value="medio">Médio</option>
                 <option value="grande">Grande</option>
               </select>
-              { errors.porte && <ErrorMessage message={errors.porte.message} /> }
+              {errors.porte && <ErrorMessage message={errors.porte.message} />}
             </div>
             <div id="sexo" className="flex flex-col gap-2">
               <label className="font-semibold text-primary-color">Sexo</label>
               <select
                 className="p-2 rounded border border-primary-color"
-                { ...register('sexo') }
+                {...register("sexo")}
               >
                 <option value="" selected disabled>
                   Selecionar
@@ -134,14 +149,18 @@ export default function MeusPets() {
                 <option value="macho">Macho</option>
                 <option value="femea">Fêmea</option>
               </select>
-              { errors.sexo && <ErrorMessage message={errors.sexo.message} /> }
+              {errors.sexo && <ErrorMessage message={errors.sexo.message} />}
             </div>
             <div id="nome" className="flex flex-col gap-2">
               <label className="font-semibold text-primary-color">Imagem</label>
-              <input type="file" className="p-2" onChange={(e) => handleImageChange(e)}/>
+              <input
+                type="file"
+                className="p-2"
+                onChange={(e) => handleImageChange(e)}
+              />
             </div>
           </div>
-          <button 
+          <button
             type="submit"
             className="mt-8 rounded w-full bg-secondary-color p-2 text-primary-color font-bold"
             disabled={!imageUrl}
