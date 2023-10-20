@@ -4,12 +4,11 @@ import { Card } from "@/components/Card";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Spinner } from "@/components/Spinner";
+import { prisma } from "@/lib/prisma";
 
 export default async function Pets() {
 
-    const pets: PetCardProps[] = await api.getAllPets();
-
-    if(!pets) return <Spinner />;
+    const pets = await prisma.pets.findMany();
 
     return (
         <>

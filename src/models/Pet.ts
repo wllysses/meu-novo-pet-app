@@ -12,8 +12,15 @@ export interface IPet {
 }
 
 export interface PetCardProps {
-  id: number
-  nome: string
-  disponivel: boolean
-  imagem: string
+  id: number;
+  usuario_id: number;
+  nome: string;
+  raca: string;
+  tipo: string;
+  idade: string;
+  porte: string;
+  sexo: string;
+  disponivel: boolean | null;
+  imagem: string;
+  criado_em: Date | null;
 }
