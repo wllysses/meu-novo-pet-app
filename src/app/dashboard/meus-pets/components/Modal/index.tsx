@@ -1,3 +1,5 @@
+"use client";
+
 import { api } from "@/services/api";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";

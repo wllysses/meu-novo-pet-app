@@ -1,42 +1,21 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { parseCookies } from "nookies";
-import { api } from "@/services/api";
-import { IPet } from "@/models/Pet";
+import { cookies } from "next/headers";
+import { prismaClient } from "@/lib/prisma";
 import { Aside } from "@/components/Aside";
-import { Spinner } from "@/components/Spinner";
-import { Modal } from "@/components/Modal";
-import { toast } from "react-toastify";
-import { useFetch } from "@/hooks/useFetch";
+import { Modal } from "@/app/dashboard/meus-pets/components/Modal";
+import { DeleteButton } from "@/app/dashboard/meus-pets/components/DeleteButton";
 
-export default function MeusPets() {
-  const router = useRouter();
-  const { token, id } = parseCookies();
 
-  const { data: pets, isLoading, isError } = useFetch<IPet[]>(`https://api-meunovopet.onrender.com/api/v1/usuario/pets/${id}`);
+export default async function MeusPets() {
+  
+  const id = cookies().get('id');
 
-  async function removePet(id: number) {
-    try {
-      const fetchData = await api.deletePet(id);
-      toast.success(fetchData.message);
-    } catch (err) {
-      console.log(err);
-      toast.error("Algo deu errado...");
-    } finally {
-      setTimeout(() => {
-        window.location.reload();
-      }, 800);
+  const pets = await prismaClient.pets.findMany({
+    where: {
+      usuario_id: parseInt(id!.value)
     }
-  }
-
-  useEffect(() => {
-    if (!token) {
-      router.push("/login");
-      return;
-    }
-  }, [token, id]);
+  }).finally(() => {
+    prismaClient.$disconnect();
+  });
 
   return (
     <div className="min-h-screen flex max-md:flex-col">
@@ -45,9 +24,7 @@ export default function MeusPets() {
         <h2 className="font-bold text-2xl border-b border-primary-color pb-2 text-primary-color">
           MEUS PETS
         </h2>
-        { isLoading && <Spinner /> }
-        { isError && <span>Algo de errado aconteceu 😢</span> }
-        {!pets?.length ? (
+        {!pets.length ? (
           <span>Nenhum pet cadastrado.</span>
         ) : (
           <div className="w-full mt-6 grid grid-cols-5 gap-8 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2">
@@ -74,12 +51,7 @@ export default function MeusPets() {
                     <h4 className="font-bold text-2xl">{pet.nome}</h4>
                     <div className="mt-4 flex items-center gap-4 text-white font-semibold max-[420px]:flex-col">
                       <Modal petId={pet.id!} status={pet.disponivel!} />
-                      <button 
-                        className="w-full rounded bg-red-600 p-2"
-                        onClick={() => removePet(pet.id!)}
-                      >
-                        Excluir
-                      </button>
+                      <DeleteButton petId={pet.id!} />
                     </div>
                   </div>
                 </div>

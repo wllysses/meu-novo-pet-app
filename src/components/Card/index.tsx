@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PetCardProps } from "@/models/Pet";
+import { IPet, PetCardProps } from "@/models/Pet";
 
 interface CardProps {
   data: PetCardProps
