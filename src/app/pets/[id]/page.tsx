@@ -1,9 +1,7 @@
 import { IoLogoWhatsapp, IoCall } from "react-icons/io5";
-import { api } from "@/services/api";
+import { prismaClient } from "@/lib/prisma";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { Spinner } from "@/components/Spinner";
-import { prisma } from "@/lib/prisma";
 
 interface ParamsProps {
   params: {
@@ -12,17 +10,16 @@ interface ParamsProps {
 }
 
 export default async function Pet({ params: { id } }: ParamsProps) {
-  const pet = await prisma.pets.findUnique({
+  const pet = await prismaClient.pets.findUnique({
     where: {
       id: parseInt(id),
     },
     include: {
       usuarios: true
     }
+  }).finally(() => {
+    prismaClient.$disconnect();
   });
-  // const pet = await api.getPetById(parseInt(id));
-
-  // if(!pet) return <Spinner />;
 
   return (
     <>
