@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/services/api";
-import { Aside } from "@/components/Aside";
+import { Aside } from "@/app/dashboard/components/Aside";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { parseCookies } from "nookies";
 

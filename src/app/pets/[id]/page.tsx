@@ -17,8 +17,6 @@ export default async function Pet({ params: { id } }: ParamsProps) {
     include: {
       usuarios: true
     }
-  }).finally(() => {
-    prismaClient.$disconnect();
   });
 
   return (

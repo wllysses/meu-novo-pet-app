@@ -4,16 +4,14 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
 export default async function Pets() {
-  const pets = await prismaClient.pets.findMany().finally(() => {
-    prismaClient.$disconnect();
-  });
+  const pets = await prismaClient.pets.findMany();
 
   return (
     <>
       <Header />
       <main className="container mx-auto my-12 p-4">
         <section className="w-full px-4 py-8 bg-secondary-color rounded flex items-center justify-center flex-col gap-2 text-white">
-          <h3 className="text-3xl font-semibold max-sm:text-xl">
+          <h3 className="text-3xl font-bold max-sm:text-xl">
             Encontre seu{" "}
             <span className="text-primary-color">melhor amigo</span>
           </h3>

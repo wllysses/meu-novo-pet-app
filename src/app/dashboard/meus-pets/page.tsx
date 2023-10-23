@@ -1,20 +1,16 @@
 import { cookies } from "next/headers";
 import { prismaClient } from "@/lib/prisma";
-import { Aside } from "@/components/Aside";
+import { Aside } from "@/app/dashboard/components/Aside";
 import { Modal } from "@/app/dashboard/meus-pets/components/Modal";
 import { DeleteButton } from "@/app/dashboard/meus-pets/components/DeleteButton";
 
-
 export default async function MeusPets() {
-  
-  const id = cookies().get('id');
+  const id = cookies().get("id");
 
   const pets = await prismaClient.pets.findMany({
     where: {
-      usuario_id: parseInt(id!.value)
-    }
-  }).finally(() => {
-    prismaClient.$disconnect();
+      usuario_id: parseInt(id!.value),
+    },
   });
 
   return (
