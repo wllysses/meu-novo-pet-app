@@ -4,8 +4,10 @@ import { api } from "@/services/api";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
+import { update } from "./action";
+
 interface ModalProps {
-    petId: number
+    petId: string
     status: boolean
 }
 
@@ -20,17 +22,17 @@ export function Modal({ petId, status }: ModalProps) {
   async function updatePet(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
 
-    try {
-        const fetchData = await api.putPetStatus(petId, newStatus);
-        toast.success(fetchData.message);
-        handleOpenModal();
-    } catch (err) {
-        console.log(err);
-    } finally {
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+    const fetchData = await update({ petId, available: newStatus });
+
+    if(!fetchData) {
+      toast.error('Algo deu errado 😢');
+      return;
     }
+
+    toast.success('Disponibilidade atualizada.')
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
   return (
@@ -43,7 +45,7 @@ export function Modal({ petId, status }: ModalProps) {
       </button>
 
       {isOpen ? (
-        <div className="h-screen w-full bg-zinc-800 bg-opacity-50 fixed top-0 left-0 flex items-center justify-center z-50">
+        <div className="h-screen w-full bg-zinc-800 bg-opacity-50 fixed top-0 left-0 flex items-center justify-center z-50 px-4">
           <div className="max-w-lg w-full bg-white rounded p-4">
             <header className="flex items-center justify-between text-primary-color font-bold border-b border-primary-color pb-2">
               <h2>ATUALIZAR STATUS DO PET</h2>

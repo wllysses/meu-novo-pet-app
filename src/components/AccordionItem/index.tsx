@@ -24,7 +24,7 @@ export function AccordionItem({ title, text }: AccordionItemProps) {
       </h4>
       <p
         className={`border-2 border-primary-color p-2 border-t-0 text-justify 
-        ${ isOpen ? "block" : "hidden"}`}
+        ${ isOpen ? "block animate-flip-down animate-delay-0" : "hidden"}`}
       >
         {text}
       </p>
