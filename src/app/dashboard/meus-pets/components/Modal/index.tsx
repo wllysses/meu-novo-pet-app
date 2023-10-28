@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@/services/api";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -45,8 +44,8 @@ export function Modal({ petId, status }: ModalProps) {
       </button>
 
       {isOpen ? (
-        <div className="h-screen w-full bg-zinc-800 bg-opacity-50 fixed top-0 left-0 flex items-center justify-center z-50 px-4">
-          <div className="max-w-lg w-full bg-white rounded p-4">
+        <div className="h-screen w-full bg-zinc-600 bg-opacity-50 fixed top-0 left-0 flex items-center justify-center z-50 px-4">
+          <div className="max-w-lg w-full bg-white rounded p-4 animate-fade-down">
             <header className="flex items-center justify-between text-primary-color font-bold border-b border-primary-color pb-2">
               <h2>ATUALIZAR STATUS DO PET</h2>
               <button onClick={handleOpenModal}>X</button>

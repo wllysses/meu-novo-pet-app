@@ -20,27 +20,23 @@ export default async function MeusPets() {
     },
   });
 
-  console.log(user);
-
   const pets = await prismaClient.pet.findMany({
     where: {
       userId: user?.id
     },
   });
 
-  console.log(pets);
-
   return (
     <div className="min-h-screen flex max-md:flex-col">
       <Sidebar />
       <main className="flex-1 px-4 py-8">
-        <h2 className="font-bold text-2xl border-b border-primary-color pb-2 text-primary-color animate-fade-down">
+        <h2 className="font-bold text-2xl border-b border-primary-color pb-2 text-primary-color">
           MEUS PETS
         </h2>
         {!pets.length ? (
           <span>Nenhum pet cadastrado.</span>
         ) : (
-          <div className="w-full mt-6 grid grid-cols-5 gap-8 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 animate-fade-up">
+          <div className="w-full mt-6 grid grid-cols-5 gap-8 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2">
             {pets &&
               pets.map((pet) => (
                 <div
