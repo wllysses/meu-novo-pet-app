@@ -5,6 +5,8 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";  
 import 'react-toastify/dist/ReactToastify.css';
 
+import NextAuthSessionProvider from "@/providers/auth";
+
 const openSans = Open_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "600", "700"],
@@ -23,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={openSans.className}>
-        <ToastContainer autoClose={1500} pauseOnFocusLoss={false} pauseOnHover={false} />
-        {children}
+        <NextAuthSessionProvider>
+          <ToastContainer autoClose={1500} pauseOnFocusLoss={false} pauseOnHover={false} />
+          {children}
+        </NextAuthSessionProvider>
       </body>
     </html>
   );

@@ -11,7 +11,7 @@ export default function Home() {
       <Header />
       <main className="container mx-auto my-14">
         <section id="hero" className="grid grid-cols-2 gap-12 max-lg:grid-cols-1 px-4">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 animate-fade-left">
             <h2 className="font-bold text-5xl leading-[60px] text-secondary-color max-[575px]:text-4xl">
               Encontre seu <span className="text-primary-color">melhor</span>{" "}
               <span className="text-primary-color">amigo:</span> Adote um{" "}
@@ -28,12 +28,12 @@ export default function Home() {
               </button>
             </Link>
           </div>
-          <Image src={dogAndCat} alt="Cat&Dog Image" width={550} />
+          <Image src={dogAndCat} alt="Cat&Dog Image" width={550} className="animate-fade-right" />
         </section>
 
         <section id="faq" className="mt-20 w-full p-2 flex flex-col items-center gap-8">
-          <h2 className="font-bold text-primary-color text-3xl">Dúvidas frequentes</h2>
-          <ul className="w-full flex flex-col gap-2">
+          <h2 className="font-bold text-primary-color text-3xl animate-fade-right">Dúvidas frequentes</h2>
+          <ul className="w-full flex flex-col gap-2 animate-fade-left">
             <AccordionItem 
               title="Como adotar um pet?" 
               text="Nossa plataforma foi pensada justamente para facilitar este processo. Nela você poderá visualizar todos os pets que estão disponpiveis e entrar em contato diretamente com a pessoa que divulgou."
