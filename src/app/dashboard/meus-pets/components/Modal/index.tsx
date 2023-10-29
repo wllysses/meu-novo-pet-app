@@ -40,7 +40,7 @@ export function Modal({ petId, status }: ModalProps) {
   return (
     <>
       <button
-        className="w-full rounded bg-blue-500 p-2"
+        className="w-full rounded bg-blue-500 p-2 hover:bg-blue-400"
         onClick={handleOpenModal}
       >
         Editar

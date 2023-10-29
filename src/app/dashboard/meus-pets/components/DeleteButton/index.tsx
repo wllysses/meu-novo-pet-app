@@ -28,7 +28,7 @@ export function DeleteButton({ petId }: DeleteButtonProps) {
 
   return (
     <button
-      className="w-full rounded bg-red-600 p-2"
+      className="w-full rounded bg-red-600 p-2 hover:bg-red-500"
       onClick={removePet}
     >
       Excluir
