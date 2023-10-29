@@ -1,7 +1,7 @@
 //import { IPet } from "@/models/Pet";
 //import { IUser } from "@/models/User";
 
-const BASE_URL = "https://api-meunovopet.onrender.com";
+// const BASE_URL = "https://api-meunovopet.onrender.com";
 
 // async function postUser(userData: IUser) {
 //   const response = await fetch(`${BASE_URL}/api/v1/usuarios`, {
