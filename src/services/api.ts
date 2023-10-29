@@ -66,12 +66,12 @@ async function uploadImage(file: File) {
 
 async function getAllPets() {
   const response = await fetch(
-    `https://ugclxgyoifypnnuizfiw.supabase.co/rest/v1/Pet`,
+    process.env.SUPABASE_API_URL as string,
     {
       cache: "no-store",
       headers: {
         apikey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnY2x4Z3lvaWZ5cG5udWl6Zml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg0OTY3NTYsImV4cCI6MjAxNDA3Mjc1Nn0.TxXTVIGj6gJTm3NejOAHE55A_koklE7HF8CnSOukvAg",
+          process.env.SUPABASE_API_KEY as string,
       },
     }
   );
