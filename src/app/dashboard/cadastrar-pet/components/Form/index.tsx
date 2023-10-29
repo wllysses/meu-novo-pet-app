@@ -9,12 +9,16 @@ import { api } from "@/services/api";
 import { ErrorMessage } from "@/components/ErrorMessage";
 
 import create from "./action";
+import { useRouter } from "next/navigation";
 
 interface RegisterPetFormProps {
   userId: string;
 }
 
 export function RegisterPetForm({ userId }: RegisterPetFormProps) {
+
+  const router = useRouter();
+
   const [imageUrl, setImageUrl] = useState("");
 
   const registerPetValidationSchema = z.object({
@@ -65,9 +69,7 @@ export function RegisterPetForm({ userId }: RegisterPetFormProps) {
 
     toast.success('Pet cadastrado com sucesso.')
     reset();
-    setTimeout(() => {
-      window.location.reload();
-    }, 800);
+    router.refresh();
   }
 
   return (

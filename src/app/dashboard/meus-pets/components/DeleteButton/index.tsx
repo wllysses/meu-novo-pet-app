@@ -1,28 +1,19 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { api } from "@/services/api";
 
 import { destroy } from "./action";
 
-interface ButtonProps {
+interface DeleteButtonProps {
     petId: string
 }
 
-export function DeleteButton({ petId }: ButtonProps) {
+export function DeleteButton({ petId }: DeleteButtonProps) {
+
+  const router = useRouter();
 
   async function removePet() {
-    // try {
-    //   const fetchData = await api.deletePet(petId);
-    //   toast.success(fetchData.message);
-    // } catch (err) {
-    //   console.log(err);
-    //   toast.error("Algo deu errado...");
-    // } finally {
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 800);
-    // }
 
     const fetchData = await destroy(petId);
 
@@ -32,9 +23,7 @@ export function DeleteButton({ petId }: ButtonProps) {
     }
 
     toast.success('Pet deletado com sucesso.')
-    setTimeout(() => {
-      window.location.reload();
-    }, 800);
+    router.refresh();
   }
 
   return (

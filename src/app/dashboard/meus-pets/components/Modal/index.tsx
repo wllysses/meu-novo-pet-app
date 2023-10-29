@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 import { update } from "./action";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
     petId: string
@@ -11,8 +12,11 @@ interface ModalProps {
 }
 
 export function Modal({ petId, status }: ModalProps) {
+
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
-  const [newStatus, setNewStateus] = useState(status);
+  const [isAvailable, setIsAvailable] = useState(status);
 
   function handleOpenModal() {
     setIsOpen((prevState) => !prevState);
@@ -21,7 +25,7 @@ export function Modal({ petId, status }: ModalProps) {
   async function updatePet(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
 
-    const fetchData = await update({ petId, available: newStatus });
+    const fetchData = await update({ petId, available: isAvailable });
 
     if(!fetchData) {
       toast.error('Algo deu errado 😢');
@@ -29,9 +33,8 @@ export function Modal({ petId, status }: ModalProps) {
     }
 
     toast.success('Disponibilidade atualizada.')
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    router.refresh();
+    setIsOpen(!isOpen);
   }
 
   return (
@@ -56,7 +59,7 @@ export function Modal({ petId, status }: ModalProps) {
                 id="disponivel"
                 className="p-2 text-primary-color border border-primary-color rounded"
                 defaultValue={status ? "true" : "false"}
-                onChange={(e) => setNewStateus(e.target.value === "true" ? true : false)}
+                onChange={(e) => setIsAvailable(e.target.value === "true" ? true : false)}
               >
                 <option value="true">Disponível</option>
                 <option value="false">Adotado</option>
