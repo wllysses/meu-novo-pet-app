@@ -27,17 +27,20 @@
 
 async function uploadImage(file: File) {
   const data = new FormData();
-  data.append('upload_preset', 'aoh4fpwm');
-  data.append('source', 'uw');
-  data.append('file', file);
+  data.append("upload_preset", "aoh4fpwm");
+  data.append("source", "uw");
+  data.append("file", file);
 
-  const response = await fetch(`https://api.cloudinary.com/v1_1/hzxyensd5/upload`, {
-    method: 'POST',
-    headers: {
-      'Accept': `application/json, text/javascript, */*; q=0.01`
-    },
-    body: data
-  });
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/hzxyensd5/upload`,
+    {
+      method: "POST",
+      headers: {
+        Accept: `application/json, text/javascript, */*; q=0.01`,
+      },
+      body: data,
+    }
+  );
   return await response.json();
 }
 
@@ -61,11 +64,20 @@ async function uploadImage(file: File) {
 //   return await response.json();
 // }
 
-// async function getAllPets() {
-//   const response = await fetch(`${BASE_URL}/api/v1/pets`, { cache: 'no-store' });
-//   const data = await response.json();
-//   return await data;
-// }
+async function getAllPets() {
+  const response = await fetch(
+    `https://ugclxgyoifypnnuizfiw.supabase.co/rest/v1/Pet`,
+    {
+      cache: "no-store",
+      headers: {
+        apikey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnY2x4Z3lvaWZ5cG5udWl6Zml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg0OTY3NTYsImV4cCI6MjAxNDA3Mjc1Nn0.TxXTVIGj6gJTm3NejOAHE55A_koklE7HF8CnSOukvAg",
+      },
+    }
+  );
+  const data = await response.json();
+  return await data;
+}
 
 // async function getPetById(id: number) {
 //   const response = await fetch(`${BASE_URL}/api/v1/pets/${id}`, { cache: 'no-store' });
@@ -104,7 +116,7 @@ export const api = {
   // authUser,
   uploadImage,
   // postPet,
-  // getAllPets,
+  getAllPets,
   // getPetById,
   // getPetsByUserId,
   // putPetStatus,

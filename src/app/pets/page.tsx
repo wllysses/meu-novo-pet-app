@@ -2,9 +2,13 @@ import { prismaClient } from "@/lib/prisma";
 import { Card } from "@/components/Card";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { api } from "@/services/api";
+import { IPet } from "@/models/Pet";
 
 export default async function Pets() {
-  const pets = await prismaClient.pet.findMany();
+  //const pets = await prismaClient.pet.findMany();
+
+  const pets: IPet[] = await api.getAllPets();
 
   return (
     <>
